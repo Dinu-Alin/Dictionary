@@ -1,0 +1,249 @@
+﻿<Page x:Class="DictionaryV3.Menu.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DictionaryV3.Menu"
+      xmlns:search="clr-namespace:DictionaryV3.CustomControls"
+      xmlns:main="clr-namespace:DictionaryV3"
+      xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="LemonChiffon"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Title="AdminPage">
+    <Page.Resources>
+        <Style x:Key="MyFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Control}">
+                        <Grid Margin="3 2">
+                            <Rectangle Name="r1" StrokeThickness="1" Stroke="Black" StrokeDashArray="2 2"/>
+                            <Border Name="border" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"  CornerRadius="2" BorderThickness="1" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ShadowStyle">
+            <Setter Property="Control.Foreground" Value="LightGray" />
+        </Style>
+
+        <Style x:Key="InformButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="11px"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="#FF1A1A1A" Opacity="0.8" />
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+        				BorderThickness="1"
+        				Padding="4,2,8,4" 
+        				BorderBrush="DarkGray" 
+        				CornerRadius="1000" 
+        				Background="{TemplateBinding Background}">
+                            <Grid >
+                                <ContentPresenter HorizontalAlignment="Center" 
+        	                           VerticalAlignment="Center" Name="contentShadow" 
+        					Style="{StaticResource ShadowStyle}">
+                                    <ContentPresenter.RenderTransform>
+                                        <TranslateTransform X="1.0" Y="1.0" />
+                                    </ContentPresenter.RenderTransform>
+                                </ContentPresenter>
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center" Name="content"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                                <Setter Property="Foreground" Value="#FF4788c8" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" >
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF1A1A1A" Opacity="1" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="content" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TranslateTransform Y="1.0" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.7" />
+                                <Setter Property="Foreground" Value="Gray" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="1.4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="1" Grid.Row="1" Width="{Binding MyBorder.Width}" Height="{Binding MyBorder.Height}" Style="{StaticResource InformButton}" Click="Button_Click" >
+            <StackPanel>
+                <TextBlock Text="⮜" Foreground="GhostWhite"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+            </StackPanel>
+        </Button>
+
+        <TextBox TextChanged="textBox_TextChanged" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" Height="40" Width="294" GotFocus="textBox_GotFocus" LostFocus="textBox_LostFocus" Name="textBox" KeyDown="textBox_KeyDown" KeyUp="textBox_KeyUp" Text="" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom"  HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontFamily="Century Ghotic">
+            <TextBox.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </TextBox.Resources>
+        </TextBox>
+        <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="4" Grid.ColumnSpan="3" Name="BorderAuto" VerticalAlignment="Top" HorizontalAlignment="Center" Height="150" Width="294">
+            <Border.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </Border.Resources>
+            <ScrollViewer Name="ScrollViewer" CanContentScroll="True" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="150" Width="294" VerticalScrollBarVisibility="Hidden" >
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Name="resultStack" Height="150" Width="294">
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        <!--<ListBox
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            x:Name="ListMyItem"
+            Grid.Column="2"
+            Grid.Row="3"
+            Grid.RowSpan="4"
+            VerticalAlignment="Top"
+            ItemsSource="{Binding Words}"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            DisplayMemberPath="Label"
+            SelectionChanged="ListMyItem_SelectionChanged"
+            >
+            <ListBox.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </ListBox.Resources>
+        </ListBox>-->
+
+        <StackPanel Grid.Column="2" Grid.Row="3" Grid.RowSpan="4" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="0,20,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Name="AddButton" Content="Add" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="30" Width="150" VerticalAlignment="Top" Padding="0" Click="AddButton_Click">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button Name="DeleteButton" Content="Delete" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="30" Width="150" VerticalAlignment="Center" Margin="0,10,0,0" Padding="0" Click="DeleteButton_Click">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+
+            <Button Name="ModifyButton" Content="Modify" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="30" Width="150" VerticalAlignment="Bottom" Margin="0,10,0,0" Click="ModifyButton_Click" Padding="0">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            
+        </StackPanel>
+
+        <Button Name="AddPhoto" Content="Add photo" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="30" Width="150" Grid.Column="2" Grid.Row="7" VerticalAlignment="Center" Click="AddPhoto_Click" Padding="0">
+            <Button.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </Button.Resources>
+        </Button>
+
+        <Image Name="ImageHolder"  Grid.Column="3" Grid.Row="7">
+            
+        </Image>
+        
+        <TextBox Name="labelText" FontFamily="Century Gothic" Background="#FF607D8B" Foreground="#FFF2F4F5" Grid.Column="4" Grid.Row="3" Width="200"></TextBox>
+        <TextBox Name="BodyText" FontFamily="Century Gothic" Background="#FF607D8B" Foreground="#FFF2F4F5" Grid.Column="4" Grid.Row="7" Width="200" TextWrapping="Wrap"></TextBox>
+        <TextBox Name="CategoryText" FontFamily="Century Gothic" Background="#FF607D8B" Foreground="#FFF2F4F5" Grid.Column="4" Grid.Row="5" Width="200"></TextBox>
+
+    </Grid>
+</Page>
